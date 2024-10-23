@@ -1,0 +1,21 @@
+h2{
+    padding-top: 25px;
+}
+.grp1{
+    padding-top: 25px;
+    min-width: auto; 
+    max-width: 255px;
+}
+
+.grp4{
+    min-width: auto;
+    max-width: 175px;
+}
+
+.row{
+    padding-top: 30px;
+}
+.para{
+    max-width: 150px;
+}
+

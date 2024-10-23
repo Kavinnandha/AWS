@@ -1,0 +1,10 @@
+
+        .table-bordered {
+            border: 1px solid rgb(162, 190, 163); 
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid rgb(174, 216, 160); 
+        }
+ 

@@ -1,0 +1,49 @@
+body {
+    background-color: #f4f6f9;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.btn-light {
+    border-radius: 20px;
+}
+
+.shadow-custom {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.icon-large {
+    font-size: 2.5rem;
+}
+
+.scrollable-content-leave-requests {
+    min-height: 250px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.scrollable-content-absent-period-report {
+    min-height: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+}

@@ -1,0 +1,42 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+
+.btn-primary {
+    background-color: #157b64;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.btn-primary:hover {
+    background-color: #0cd6a7;
+    text-align: center;
+    
+}
+
+.btn-primary{
+    background-color:#157b64;
+    text-align: center;
+}

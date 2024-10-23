@@ -1,0 +1,68 @@
+.details{
+    background-image: linear-gradient(120deg, #155799, #159957);
+    color:white;padding: 3em 3em;
+}
+.row{
+    padding-top: 15px;
+}
+
+.na{
+    padding-top: 45px;
+}
+a:link{
+    color: green;
+}
+
+a:link:hover{
+    color: green;
+}
+.pro:any-link{
+    color: green;
+}
+.pro:any-link:hover{
+    color: green;
+}
+
+a:hover,a:focus{
+    color: white;
+    background-color: white;
+}
+.nav-link{
+    color: green;
+    width:255px;
+}
+.nav-link.active{
+    color: black;
+    border-color: rgba(0,133,74,255) rgba(0,133,74,255) white !important;
+    border-width: medium;
+}
+.nav-link:hover{
+    color: black;
+    border-color: rgba(0,133,74,255) rgba(0,133,74,255) white !important ;
+}
+.nav{
+    border-color: (0,133,74,255) rgba(0,133,74,255) white !important;
+}
+
+.dropdown-item {
+    color: green; 
+    background-color: white; 
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: darkgreen !important; 
+    background-color: lightgreen !important; 
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: darkgreen !important; 
+    background-color: lightgreen !important;
+}
+
+.dropdown-item:visited {
+    color: green !important; 
+}
+
+.active-link {
+    color: rgb(13, 226, 13) !important; 
+}

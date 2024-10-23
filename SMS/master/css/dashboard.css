@@ -1,0 +1,16 @@
+.form-select{
+    background-color: #097d3f;
+    color: #fff;
+}
+#pre{
+    width: auto;
+}
+.row{
+    padding-top: 1px;
+}
+#form-group{
+    padding-top: 25px;
+}
+.btn{
+    float: right;
+}
