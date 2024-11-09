@@ -3,11 +3,38 @@ $(document).ready(function(){
     $('#main-dropdown').on('change', function() {
         var main_data = $('#main-dropdown').val();
         var values = main_data.split(',');
-        
+        var periodTaken = $('#period').val();
+        if(periodTaken){
+                $.ajax({
+            url: 'php/check_attendance.php',
+            type: 'POST',
+            data: {
+                period: periodTaken
+            },
+            dataType: 'json',
+            success: function(result){
+                if (result.status === 'exists') {
+                    alert('Data already exists for this period and date.'); 
+                    $('#student-information').empty();
+                    result.data.forEach(function(session){
+                        $('#student-information').append(`
+                        <tr>
+                            <th scope="row">${session.register_no}</th>
+                            <td>${session.name}</td>
+                            <td>${session.description}</td>
+                            <td>${session.remark}</td>
+                        </tr>`);
+                    });
+                 };
+            }
+        });
+
+
+        }
         $.ajax({
             url: 'php/select_students.php',
             type: 'POST',
-            data: { batch_id: values[0], section_id: values[3]},
+            data: { batch_id: values[0],department_id: values[1], section_id: values[3]},
             dataType: 'json',
             success: function(data){
                 $('#student-information').empty();
@@ -59,6 +86,7 @@ $(document).ready(function(){
     });
 
 
+
     $('#main-dropdown').on('change', function() {
         var main_data = $('#main-dropdown').val();
 	var batchid = main_data.split(',');
@@ -81,6 +109,36 @@ $(document).ready(function(){
             });
         }
     });
+    $('#period').on('change',function() {
+        var periodTaken = $('#period').val();
+        var main = $('#main-dropdown').val();
+        if(main){
+            $.ajax({
+                url: 'php/check_attendance.php',
+                type: 'POST',
+                data: {
+                    period: periodTaken
+                },
+                dataType: 'json',
+                success: function(result){
+                    if (result.status === 'exists') {
+                        alert('Data already exists for this period and date.'); 
+                        $('#student-information').empty();
+                        result.data.forEach(function(session){
+                            $('#student-information').append(`
+                                <tr>
+                                <th scope="row">${session.register_no}</th>
+                                <td>${session.name}</td>
+                                <td>${session.description}</td>
+                                <td>${session.remark}</td>
+                                </tr>`);
+                        });
+                    };
+                }
+            });
+        }
+    });
+
    
     $("#submit-attendance").click(function(e) {
         e.preventDefault(); 
@@ -117,8 +175,6 @@ $(document).ready(function(){
             alert("Please fill all required fields.");
             return;
         }
-    
-       
         $.ajax({
             url: 'php/upload_attendance.php',
             method: 'POST',

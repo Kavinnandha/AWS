@@ -52,7 +52,7 @@ if ($queryEXE->num_rows > 0) {
 	$advisor_leave_data = '<h4 class="text-center">No Leave requests pending</h4>';
 }
 
-// HOD Leave Data
+
 $get_hod_leave_details = 'SELECT lr.reference_id, lr.remark, si.name, lr.start_date, lr.end_date, lr.no_of_days, at_type.description AS request_for, lr.reason, lr.out_time, lr.in_time 
                           FROM leave_record lr 
                           JOIN student_information si ON si.register_no = lr.reference_id 
@@ -104,7 +104,7 @@ if ($queryEXE->num_rows > 0) {
 	$hod_leave_data = '<h4 class="text-center">No Leave requests pending</h4>';
 }
 
-// Faculty Leave Data
+
 $get_faculty_leave_data = 'SELECT lr.reference_id, lr.remark, l.name, lr.start_date, lr.end_date, lr.no_of_days, at_type.description AS request_for, lr.reason, lr.out_time, lr.in_time 
                            FROM leave_record lr 
                            JOIN login l ON l.user_id = lr.reference_id 
@@ -154,7 +154,7 @@ if ($queryEXE->num_rows > 0) {
 	$faculty_leave_data = '<h4 class="text-center">No Leave requests pending</h4>';
 }
 
-// Faculty leave requests for principal login
+
 $get_faculty_leave_data_principal = 'SELECT d.name AS department_name, lr.reference_id, lr.remark, l.name, lr.start_date, lr.end_date, lr.no_of_days, at_type.description AS request_for, lr.reason, lr.out_time, lr.in_time 
                            FROM leave_record lr 
                            JOIN login l ON l.user_id = lr.reference_id 
@@ -292,5 +292,24 @@ if($queryEXE->num_rows > 0){
         $staff_leave_history.='</tr>';
         }
 }
+
+$get_student_history_advisor = 'select lr.reference_id,lr.remark,si.name,lr.start_date,lr.end_date,lr.no_of_days,at_type.description as request_for,lr.reason,lr.out_time,lr.in_time,ls.name as status from leave_record lr join student_information si on si.register_no=lr.reference_id join leave_status ls on ls.status_id=lr.status_id join attendance_type at_type on at_type.type_id=lr.type_id join mapping_program_department mpd on mpd.mapping_id=si.mapping_id join advisor_mapping am on am.mapping_id = mpd.mapping_id  where lr.status_id in (1,2) and am.user_id="'.$user_id.'"';
+ $advisor_student_leave_history = '';
+$queryEXE = mysqli_query($connection,$get_student_history_advisor);
+if($queryEXE->num_rows > 0){
+    while($row = mysqli_fetch_array($queryEXE)){
+        $advisor_student_leave_history.= '<tr><td>'.$row['name'].'</td>';
+        $advisor_student_leave_history.= '<td>'.$row['request_for'].'</td>';
+        $advisor_student_leave_history.= '<td>'.$row['no_of_days'].'</td>';
+        $advisor_student_leave_history.= '<td>'.$row['start_date'].'</td>';
+        $advisor_student_leave_history.= '<td>'.$row['end_date'].'</td>';
+        $advisor_student_leave_history.= '<td>'.$row['reason'].'</td>';
+        $advisor_student_leave_history.= '<td>'.$row['remark'].'</td>';
+        $advisor_student_leave_history.= '<td>'.$row['status'].'</td>';
+        $advisor_student_leave_history.='</tr>';
+        }
+}
+
+
 ?>
 

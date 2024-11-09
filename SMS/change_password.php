@@ -6,6 +6,7 @@ $error_msg = '';
 $success_msg = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(isset($_SESSION['user_id'])){
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
@@ -50,5 +51,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     header("Location: profile.php?password_changed=1");
     exit();
+}else{
+    if(isset($_SESSION['register_no'])){
+        $current_password = $_POST['current_password'];
+        $new_password = $_POST['new_password'];
+        $confirm_password = $_POST['confirm_password'];
+        $register = $_SESSION['register_no'];  
+    
+        
+        $query = "SELECT password FROM student_information WHERE register_no = ?";
+        $stmt = $connection->prepare($query);
+        $stmt->bind_param("i", $register);
+        $stmt->execute();
+        $stmt->bind_result($password);  
+        $stmt->fetch();
+        $stmt->close();
+    
+        $query_hash_current_password = "SELECT PASSWORD(?)";
+        $stmt2 = $connection->prepare($query_hash_current_password);
+        $stmt2->bind_param("s", $current_password);
+        $stmt2->execute();
+        $stmt2->bind_result($hashed_current_password);  
+        $stmt2->fetch();
+        $stmt2->close();
+    
+    
+        if ($hashed_current_password === $password) { 
+            if ($new_password === $confirm_password) {
+    
+                $update_query = "UPDATE student_information SET password = PASSWORD(?) WHERE register_no = '$register'";
+                $update_stmt = $connection->prepare($update_query);
+                $update_stmt->bind_param("s", $new_password);
+                if ($update_stmt->execute()) {
+                    $_SESSION['success_msg'] = "Password successfully updated."; 
+                } else {
+                    $_SESSION['error_msg'] = "Error updating password."; 
+                }
+                $update_stmt->close();
+            } else {
+                $_SESSION['error_msg'] = "New passwords do not match."; 
+            }
+        } else {
+            $_SESSION['error_msg'] = "Current password is incorrect."; 
+        }
+    
+        header("Location: profile.php?password_changed=1");
+        exit();
+}
+}
 }
 ?>

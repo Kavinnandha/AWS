@@ -3,7 +3,8 @@
 $user_id = $_SESSION['user_id'];
 
 // Student_Leave_requests
-$sql = "SELECT si.name, lr.reason, lr.no_of_days
+$sql = "
+    SELECT si.name, lr.reason, lr.no_of_days
         FROM leave_record lr 
         JOIN student_information si ON si.register_no = lr.reference_id 
         JOIN attendance_type at_type ON at_type.type_id = lr.type_id 
@@ -24,15 +25,15 @@ if ($result && mysqli_num_rows($result) > 0) {
         $leave_requests .= '<td>' . $row['no_of_days'] . '</td>';
         $leave_requests .= '<td>' . $row['reason'] . '</td>';
     }
-}
-else {
+} else {
     $leave_requests .= '<tr><td colspan="3" class="text-center">No Leave Requests</td></tr>';
 }
 
 // Attendance Period Report
 $user_sql = "
     SELECT 
-        l.department_id, 
+        l.department_id,
+        am.advisor_mapping_id,
         am.batch_id, 
         am.section_id
     FROM 
@@ -48,6 +49,7 @@ $user_data = mysqli_fetch_assoc($user_result);
 
 $department_id = $user_data['department_id'];
 $batch_id = $user_data['batch_id'];
+$advisor_mapping_id = $user_data['advisor_mapping_id'];
 $section_id = $user_data['section_id'];
 
 $attendance_sql = "
@@ -65,13 +67,15 @@ $attendance_sql = "
     JOIN 
         student_information si ON a.register_no = si.register_no
     JOIN 
-        mapping_course_department_batch mcd ON si.batch_id = mcd.batch_id AND si.section_id = mcd.section_id
+        mapping_course_department_batch mcd ON si.batch_id = mcd.batch_id 
+    JOIN
+        mapping_teacher_course mtc on mtc.section_id = si.section_id
     JOIN 
         mapping_program_department mpd ON mpd.mapping_id = mcd.mapping_id
     WHERE 
         s.date_of_session = CURDATE()
         AND mcd.batch_id = '$batch_id'
-        AND mcd.section_id = '$section_id'
+        AND mtc.section_id = '$section_id'
         AND mpd.department_id = '$department_id'
     GROUP BY 
         s.period
@@ -169,18 +173,43 @@ if ($missed_attendance_result) {
     $missed_attendance_rows = '<tr><td colspan="2" class="text-center">Error in Query: ' . mysqli_error($connection) . '</td></tr>';
 }
 
-$get_low_attendance_details = 'SELECT si.register_no, si.name, (SUM(CASE WHEN status = 1 THEN 1 ELSE (CASE WHEN status = -1 THEN 1 ELSE 0 END) END) / COUNT(a.status)) * 100 as attendance_percentage FROM attendance a JOIN session s ON s.session_id = a.session_id JOIN mapping_teacher_course mtc ON mtc.new_id = s.new_id JOIN student_information si ON si.register_no = a.register_no JOIN mapping_program_department mpd ON mpd.mapping_id = si.mapping_id JOIN advisor_mapping am ON am.mapping_id = mpd.mapping_id WHERE am.user_id =6 GROUP BY register_no having attendance_percentage < 75 ORDER BY `attendance_percentage`';
+$get_low_attendance_details = $sql = "
+SELECT si.register_no,
+    si.name,
+    (
+        SUM(
+            CASE
+                WHEN status = 1 THEN 1
+                ELSE CASE
+                    WHEN status = -1 THEN 1
+                    ELSE 0
+                END
+            END
+        ) / COUNT(a.status)
+    ) * 100 AS attendance_percentage
+FROM attendance a
+    JOIN session s ON s.session_id = a.session_id
+    JOIN mapping_teacher_course mtc ON mtc.new_id = s.new_id
+    JOIN student_information si ON si.register_no = a.register_no
+    JOIN mapping_program_department mpd ON mpd.mapping_id = si.mapping_id
+    JOIN advisor_mapping am ON am.mapping_id = mpd.mapping_id
+WHERE am.user_id = $user_id
+GROUP BY si.register_no
+HAVING attendance_percentage < 75
+ORDER BY attendance_percentage;
+";
 
-$queryEXE = mysqli_query($connection,$get_low_attendance_details);
-if($queryEXE -> num_rows > 0){
+
+$queryEXE = mysqli_query($connection, $get_low_attendance_details);
+if ($queryEXE->num_rows > 0) {
     $low_attendance_data = '';
-    while($row = mysqli_fetch_array($queryEXE)){
-        $low_attendance_data.='<tr>';
-        $low_attendance_data.='<td>'.$row['register_no'].'</td>';
-        $low_attendance_data.='<td>'.$row['name'].'</td>';
-        $low_attendance_data.='<td>'.$row['attendance_percentage'].'</td>';
+    while ($row = mysqli_fetch_array($queryEXE)) {
+        $low_attendance_data .= '<tr>';
+        $low_attendance_data .= '<td>' . $row['register_no'] . '</td>';
+        $low_attendance_data .= '<td>' . $row['name'] . '</td>';
+        $low_attendance_data .= '<td>' . $row['attendance_percentage'] . '</td>';
     }
-}else{
+} else {
     $low_attendance_data = 'data not found';
 }
 
@@ -202,21 +231,11 @@ $attendance_dips_advisor_sql = "
 	    mapping_program_department mpd ON mpd.mapping_id = mcd.mapping_id
     JOIN 
 	    session s ON s.new_id = mtc.new_id
-    WHERE 
-	    mcd.mapping_id = (SELECT DISTINCT 
-						        si.mapping_id 
-					        FROM 
-                      	        student_information si 
-					        JOIN 
-							    mapping_program_department mpd ON mpd.mapping_id = si.mapping_id 
-                            WHERE 
-							    batch_id = $batch_id
-                      		    AND section_id = $section_id
-							    AND department_id = $department_id)
-							
-        AND mcd.batch_id = $batch_id
-        AND mpd.department_id = $department_id
-    GROUP BY
+    JOIN 
+        advisor_mapping am on am.mapping_id = mcd.mapping_id
+        WHERE
+            am.advisor_mapping_id = $advisor_mapping_id
+        GROUP BY
 	    mcd.course_id
 ";
 
@@ -231,9 +250,55 @@ if (mysqli_num_rows($attendance_dips_advisor_result) > 0) {
     while ($row = mysqli_fetch_assoc($attendance_dips_advisor_result)) {
         $labels[] = $row["course_id"];
         $attendance_percentage = ($row["total_present"] / ($row['total_present'] + $row['total_absent'] + $row['total_od']) * 100);
-        $data[] = round($attendance_percentage, 3); 
+        $data[] = round($attendance_percentage, 3);
     }
 }
 
 $labels_json = json_encode($labels);
 $data_json = json_encode($data);
+
+
+// Today Missed attendance
+$get_time_table = "
+SELECT DISTINCT
+            s.date_of_session,
+            s.period,
+            c.course_id,
+            l.name
+        FROM 
+            advisor_mapping am
+        JOIN mapping_teacher_course mtc ON 
+            mtc.section_id = am.section_id
+        JOIN session s ON 
+            s.new_id = mtc.new_id
+            AND s.date_of_session = CURDATE()
+        JOIN mapping_course_department_batch mcdb ON 
+            mcdb.course_mapping_id = mtc.course_mapping_id
+            AND mcdb.batch_id = am.batch_id
+        JOIN course c ON 
+            c.course_id = mcdb.course_id
+        JOIN login l ON 
+            l.user_id = mtc.user_id
+        LEFT JOIN attendance a ON 
+            a.session_id = s.session_id
+        WHERE 
+           am.user_id = $user_id
+        ORDER BY s.period
+";
+$get_current_date = 'select CURDATE()';
+$queryEXE = mysqli_query($connection,$get_current_date);
+$time_table_result = mysqli_query($connection,$get_time_table);
+$current_date = mysqli_fetch_row($queryEXE)[0];
+$time_table = '<td>'.$current_date.'</td>';
+$periods = [];
+while ($row = mysqli_fetch_assoc($time_table_result)) {
+    $periods[$row['period']] = $row;
+}
+for($x = 1;$x <= 9; $x++){
+    if(isset($periods[$x])){
+        $time_table.='<td class="table-success">'.$periods[$x]['course_id'].'-'.$periods[$x]['name'].'</td>';
+    }else{
+        $time_table.='<td class="table-danger">'.$x.'</td>';
+        
+    }
+}

@@ -21,7 +21,7 @@
                     <div class="col">
                         <div class="input-group grp21">
                             <span class="input-group-text" id="basic-addon1">From</span>
-                            <input type="date" class="form-control" id="startDate" name="start_date" required onchange="calculateDays()">
+                            <input type="date" class="form-control" id="startDate" name="start_date" min="<?php echo date('Y-m-d');?>" required onchange="calculateDays()">
                         </div>
                     </div>
 
@@ -82,6 +82,11 @@
                 document.getElementById('noOfDays').value = diffDays;
             }
         }
+        $(document).on("change","#startDate",function(){
+            var date = $(this).val();
+            $('#endDate').attr('min',date);
+        });
+    
     </script>
 
 </body>

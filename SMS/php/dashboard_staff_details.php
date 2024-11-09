@@ -11,7 +11,7 @@ $no_of_student = 'SELECT COUNT(DISTINCT si.register_no) AS total '.
 'JOIN mapping_course_department_batch AS mcdb '.
 'ON mtc.course_mapping_id = mcdb.course_mapping_id '.
 'JOIN student_information AS si '.
-'ON si.mapping_id = mcdb.mapping_id AND si.batch_id = mcdb.batch_id AND si.section_id = mcdb.section_id '.
+'ON si.mapping_id = mcdb.mapping_id AND si.batch_id = mcdb.batch_id AND si.section_id = mtc.section_id '.
 'WHERE user_id = "'.$user_id.'"';
 $queryEXE = mysqli_query($connection,$no_of_student);
 $row = mysqli_fetch_assoc($queryEXE);
@@ -27,7 +27,7 @@ $get_subject_taught = 'SELECT c.name AS Course, d.name AS Department, b.batch_na
 'JOIN mapping_course_department_batch AS mcdb ON mtc.course_mapping_id = mcdb.course_mapping_id '.
 'JOIN course AS c ON c.course_id = mcdb.course_id '.
 'JOIN batch AS b ON b.batch_id = mcdb.batch_id '.
-'JOIN section AS s ON s.section_id = mcdb.section_id '.
+'JOIN section AS s ON s.section_id = mtc.section_id '.
 'JOIN mapping_program_department AS mpd ON mpd.mapping_id = mcdb.mapping_id '.
 'JOIN department AS d ON d.department_id = mpd.department_id '.
 'WHERE mtc.user_id = "'.$user_id.'"';
@@ -73,10 +73,10 @@ $get_student = 'SELECT si.register_no,si.name,d.name as department,b.batch_name 
 'FROM mapping_teacher_course AS mtc '.
 'JOIN mapping_course_department_batch AS mcdb ON mtc.course_mapping_id = mcdb.course_mapping_id '.
 'JOIN batch AS b ON b.batch_id = mcdb.batch_id '.
-'JOIN section as s ON s.section_id = mcdb.section_id '.
+'JOIN section as s ON s.section_id = mtc.section_id '.
 'JOIN mapping_program_department AS mpd ON mpd.mapping_id = mcdb.mapping_id '.
 'JOIN department AS d ON d.department_id = mpd.department_id '.
-'JOIN student_information AS si ON si.mapping_id = mcdb.mapping_id AND si.batch_id = mcdb.batch_id AND si.section_id = mcdb.section_id '.
+'JOIN student_information AS si ON si.mapping_id = mcdb.mapping_id AND si.batch_id = mcdb.batch_id AND si.section_id = mtc.section_id '.
 'WHERE user_id = "'.$user_id.'"';
 $queryEXE = mysqli_query($connection, $get_student);
 $total_data = '';

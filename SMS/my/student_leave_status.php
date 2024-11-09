@@ -17,7 +17,7 @@ include 'leave_history.php';
         <div class="text-center"><h3>Leave Status</h3></div>
         <div class="mt-3 table-responsive">
 	    <label><h4>Status of current leave / OD request : </h4></label>
-	    <table class="table table-striped">
+	    <table class="table table-striped" id="applied">
             <thead>
                 <tr>
                     <th>From</th>
@@ -39,7 +39,7 @@ include 'leave_history.php';
         </div>
         <div class="mt-3 table-responsive">
             <label><h4>History:</h4></label>
-            <table id="exam" class="table table-striped">
+            <table id="history" class="table table-striped">
             <thead>
                 <tr>
                     <th>From</th>
@@ -59,5 +59,5 @@ include 'leave_history.php';
             </table>
         </div>
     </div>
-    <script>new DataTable('#exam');</script>
+    <script>new DataTable('#history');new DataTable('#applied');</script>
 </body>

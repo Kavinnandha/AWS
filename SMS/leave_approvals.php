@@ -36,7 +36,7 @@ include 'php/leave_approval_details.php';
         ?>
 
     </div>
-<?php if($_SESSION['role_id'] == '1'): ?>
+<?php if($_SESSION['role_id'] == '1' or $_SESSION['role_id'] == '6'): ?>
 	<div class="container mt-5">
 		<h3>History</h3>
 		<table id="history" class="table table-striped">
@@ -53,8 +53,13 @@ include 'php/leave_approval_details.php';
 				</tr>
 			</thead>		
 			<tbody>
-                <?php echo $student_leave_history; ?>
-                <?php echo $staff_leave_history; ?>
+        <?php if($_SESSION['role_id']=='1'){
+                    echo $student_leave_history;
+                    echo $staff_leave_history;
+                }else{
+                    echo $advisor_student_leave_history;
+                }
+?>
 			</tbody>
 		</table>	
     </div>

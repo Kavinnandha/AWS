@@ -17,7 +17,7 @@ $role = $_SESSION['role_id'];
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-striped table-hover mt-5">
+                <table class="table table-striped table-hover mt-5" id="advisor-table">
                     <thead>
                         <tr>
                             <th scope="col">Name</th>

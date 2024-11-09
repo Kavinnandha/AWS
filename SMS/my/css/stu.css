@@ -67,3 +67,119 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+
+.stat-card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card-body {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.stat-content {
+    flex-grow: 1;
+}
+
+.stat-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+/* Total Students Card */
+.total-students {
+    background: linear-gradient(135deg, #4e54c8, #8c55e4);
+}
+
+.total-students .stat-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Subjects Taught Card */
+.on-duty {
+    background: linear-gradient(135deg, #43a047, #1de9b6);
+}
+
+.on-duty .stat-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+
+.absent {
+    background: linear-gradient(135deg, #ff9800, #ffd54f);
+}
+
+.absent .stat-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Arrears Card */
+.arrears {
+    background: linear-gradient(135deg, #ef5350, #ff867c);
+}
+
+.arrears .stat-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .stat-card-body {
+        padding: 1.25rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+    }
+
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+.shadow-custom {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.scrollable-content {
+    min-height: 160px;
+    max-height: 160px;
+    overflow-y: auto;
+}
+

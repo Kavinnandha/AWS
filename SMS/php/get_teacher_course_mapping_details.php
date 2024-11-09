@@ -40,8 +40,7 @@ if($queryEXE->num_rows > 0){
 $select_course_mapping_data = 'select mcdb.course_mapping_id,c.name as course_name,d.name as department_name,b.batch_name,mcdb.semester from mapping_course_department_batch mcdb join course c on c.course_id=mcdb.course_id '.
 'join mapping_program_department mpd on mpd.mapping_id=mcdb.mapping_id '.
 'join department d on d.department_id=mpd.department_id '.
-'join batch b on b.batch_id=mcdb.batch_id '.
-'left join mapping_teacher_course mtc on mtc.course_mapping_id=mcdb.course_mapping_id where mtc.course_mapping_id is null';
+'join batch b on b.batch_id=mcdb.batch_id ';
 $queryexe = mysqli_query($connection,$select_course_mapping_data);
 if($queryexe->num_rows > 0){
 	$course_mapping_data = '<option selected value="">select course</option>';

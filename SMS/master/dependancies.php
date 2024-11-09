@@ -8,10 +8,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom CSS for all pages -->
-<link rel="stylesheet" href="/sms/master/css/dashboard.css">
+<link rel="stylesheet" href="/SMS/master/css/dashboard.css">
 
 <!-- Custom JavaScript for attendance -->
-<script src="/sms/master/js/update_subjects.js"></script>
+<script src="/SMS/master/js/update_subjects.js"></script>
 
 <!-- Core DataTables JavaScript for adding advanced table functionalities like sorting, filtering, and pagination -->
 <script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>

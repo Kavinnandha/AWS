@@ -2,8 +2,8 @@
 // Configuration for database connection
 $host = "localhost"; 
 $dbname = "sms";
-$username = "root"; 
-$password = ""; 
+$username = "sammy"; 
+$password = "password"; 
 
 // MySQLi connection
 $connection = new mysqli($host, $username, $password, $dbname);

@@ -17,7 +17,7 @@ if(isset($_POST['reference_id'])){
 		$update_query = 'update leave_record set status_id=8 where leave_id="'.$leave_id.'"';
 	}
 	$queryEXE = mysqli_query($connection,$update_query);
-	Header('Location: /sms/leave_approvals.php');
+	Header('Location: /SMS/leave_approvals.php');
 }
 
 ?>

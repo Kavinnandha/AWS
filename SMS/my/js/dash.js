@@ -36,7 +36,7 @@ fetch('dash_get_info.php')
                 datasets: [{
                     label: 'Attendance Status',
                     data: [totalSessions - totalAttendance, totalAttendance],
-                    backgroundColor: ['#4caf50', '#f44336'],
+                    backgroundColor: ['#4caf50', 'red'],
                     hoverOffset: 4
                 }]
             },

@@ -86,3 +86,5 @@ $(function() {
     });
 });
 
+new DataTable('#course-table');
+

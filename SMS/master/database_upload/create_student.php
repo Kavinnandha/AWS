@@ -13,8 +13,10 @@ include '../sidebar.php';
             <div class="card-body">
             <p class="card-text">Select the department,batch and section below and choose csv file for upload.</p>
 	    <p>For bulk upload, please follow the format mentioned below(name of the first columns in excel should exactly match): </p>
-        <p><b>register_no,name,DOB(dd-mm-yyyy),gender(M for male and F for female),boarding_status(H for Hosteller, D for Dayscholar),email</b></p>
+        <p><b>register_no,name,DOB,gender(M for male and F for female),boarding_status(H for Hosteller, D for Dayscholar),email</b></p>
+        <p> DOB format: dd-mm-yyyy </p>
         <p>The default password for a student is siet@2024. </p>
+
           </div>
         </div>
             <div class="card mt-3">
@@ -71,7 +73,7 @@ include '../sidebar.php';
         </div>
 
         <div class="modal fade" id="studentFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl">
                 <div class="modal-content justify-content-center ">
                     <div class="modal-header">
                         <h5 class="modal-title" id="studentFormModalLabel">Insert Student Information</h5>

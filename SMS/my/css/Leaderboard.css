@@ -1,6 +1,52 @@
-.row{
-    padding-top: 35px;
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: auto;
 }
-.leadtable{
-    padding-top: 35px;
+
+.scroll-container {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table thead {
+  background-color: #6c757d;
+  color: white;
+  text-align: center;
+}
+
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 15px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: #e9ecef;
+}
+
+.table-striped tbody tr:hover {
+  background-color: #d3d3d3;
+}
+
+.course-name {
+  font-weight: bold;
+  color: #495057;
 }

@@ -1,9 +1,9 @@
 <?php
 session_start();
 include 'master/config.php';
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
+require 'lib/PHPMailer/src/Exception.php';
+require 'lib/PHPMailer/src/PHPMailer.php';
+require 'lib/PHPMailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

@@ -2,6 +2,17 @@
     background-image: linear-gradient(120deg, #155799, #159957);
     color:white;padding: 3em 3em;
 }
+.log{
+    font-size: 1rem;
+}
+
+.pro-btn{
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer;
+    color:white;
+}
 .row{
     padding-top: 15px;
 }

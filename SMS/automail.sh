@@ -6,7 +6,7 @@ subject="Attendance Report"
 body="Automated Attendance Report for $(date '+%d-%m-%Y')"
 
 # Fetch the PDF and encode it in base64
-pdf_base64=$(curl -s http://110.172.151.105/sms/web.php | base64)
+pdf_base64=$(curl -s http://110.172.151.105/SMS/web.php | base64)
 
 # Check if PDF generation was successful
 if [ $? -eq 0 ] && [ -n "$pdf_base64" ]; then

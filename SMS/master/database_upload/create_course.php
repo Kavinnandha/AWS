@@ -22,7 +22,7 @@ include '../session.php'?>
                 </div>
             </div>
 
-            <table class="table table-striped mt-5">
+            <table class="table table-striped mt-5" id="course-table">
                 <thead>
                     <tr>
                         <th scope="col">Course ID</th>

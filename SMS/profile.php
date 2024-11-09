@@ -1,25 +1,25 @@
 <?php
 include 'master/config.php';
 include 'master/session.php';
-$user_id = $_SESSION['user_id'];
 $role = $_SESSION['role_id'];
-
+if(isset($_SESSION['user_id'])){
+$user_id = $_SESSION['user_id'];
 $sql = "SELECT name, email_id, designation FROM login WHERE user_id = '$user_id'";
-$result = $connection->query($sql);
-
+$result = mysqli_query($connection,$sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $userName = $row['name'];
     $userEmail = $row['email_id'];
     $userDesig = $row['designation'];
+    $data = "<strong>DESIGNATION:</strong>";
     
-} else {
+}
+else {
     $userName = "Unknown";
     $userEmail = "Unknown";
     $userDesig = "Unknown";
      
 }
-
 $batch_name = $_SESSION['batch_name'] ?? 'default_batch_name'; 
 
 $sqlSubjects = 'SELECT DISTINCT c.course_id, c.name 
@@ -39,6 +39,26 @@ if ($resultSubjects->num_rows > 0) {
     $subjectDetails = "No subjects assigned";
 }
 
+}else{
+$register = $_SESSION['register_no'];
+$sql_stu = "SELECT name,email,register_no FROM student_information WHERE register_no = '$register'";
+$result_stu = mysqli_query($connection,$sql_stu);
+if($result_stu->num_rows > 0){
+    $row = $result_stu->fetch_assoc();
+    $userName = $row['name'];
+    $userEmail = $row['email'];
+    $userDesig = $row['register_no'];
+    
+    $data = "<strong>REGISTER NO:</strong>";
+} else {
+    $userName = "Unknown";
+    $userEmail = "Unknown";
+    $userDesig = "Unknown";
+     
+}
+}
+
+
 $connection->close();
 
 $error_msg = isset($_SESSION['error_msg']) ? $_SESSION['error_msg'] : '';
@@ -46,8 +66,10 @@ $success_msg = isset($_SESSION['success_msg']) ? $_SESSION['success_msg'] : '';
 
 unset($_SESSION['error_msg']);
 unset($_SESSION['success_msg']);
-?>
+$timestamp = date('c');
 
+$last_login = '<br></br><p>' . $timestamp . '</p>';
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +84,7 @@ unset($_SESSION['success_msg']);
     <div class="container mt-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/sms/<?php if($role==0){ echo 'staff_dashboard.php';}else if($role==1){echo 'dashboard_hod.php';}else if($role==6){echo 'dashboard_advisor.php';} ?>">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/SMS/<?php if($role==0){ echo 'dashboard_staff.php';}else if($role==1){echo 'dashboard_hod.php';}else if($role==6){echo 'dashboard_advisor.php';}else if($role==-1){echo 'my/homepage.php';} ?>">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">Profile</li>
             </ol>
         </nav>
@@ -80,7 +102,7 @@ unset($_SESSION['success_msg']);
                         <button class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</button>
                     </div>
                     <div class="card-footer border-0 bg-transparent">
-                        <a href="/sms/logout.php">
+                        <a href="/SMS/logout.php">
                             <button class="btn btn-success w-100">Logout</button>
                         </a>
                     </div>
@@ -101,7 +123,7 @@ unset($_SESSION['success_msg']);
                                 <div class="col-md-8"><?php echo $userEmail; ?></div>
                             </div>
                             <div class="row mb-3"> 
-                                <div class="col-md-4"><strong>DESIGNATION:</strong></div>
+                                <div class="col-md-4"><?php echo $data;?></div>
                                 <div class="col-md-8"><?php echo $userDesig; ?></div>
                             </div>
                           <!--  <div class="row mb-3"> 
@@ -110,7 +132,7 @@ unset($_SESSION['success_msg']);
                             </div> -->
                         </div>
                         <br><br><hr>
-                        <h4 class="text-center profile-spacing">Last Login</h4>
+                        <h4 class="text-center profile-spacing">Last Login : <?php echo $last_login;?></h4>
                         <div class="mt-4 text-center"> 
                             <h5>Last access to site:</h5>
                          

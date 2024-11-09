@@ -68,3 +68,4 @@ $(function() {
     });
 });
 
+new DataTable('#advisor-table');

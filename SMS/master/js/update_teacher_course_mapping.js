@@ -67,4 +67,4 @@ $(function() {
         }
     });
 });
-
+new DataTable('#teacher-course-map');

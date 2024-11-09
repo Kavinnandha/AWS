@@ -1,23 +1,83 @@
 <?php include 'leave_info.php' ;
 include 'extra_curricular_table.php';
+include 'attendance_report.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charts in Row</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Charts in Row</title>
+        <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/stu.css">
 </head>
 <body>
     <div class="container">
+    <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card total-students" data-bs-toggle="modal" data-bs-target="#totalModal">
+                        <div class="stat-card-body">
+                            <div class="stat-icon">
+                            <i class="fi fi-rr-user-graduate"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">Overall Attendance Percentage</h3>
+                                <p class="stat-value"><?php echo $attendance_percentage ;?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card on-duty">
+                        <div class="stat-card-body">
+                            <div class="stat-icon">
+                            <i class="fi fi-rr-ranking-podium"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">LearderBoard - Rank</h3>
+                                <p class="stat-value">15</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card absent">
+                        <div class="stat-card-body">
+                            <div class="stat-icon">
+                            <i class="fi fi-rr-leave"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">No Of Leave Applied</h3>
+                                <p class="stat-value"><?php echo $tot_leave['total'];?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="stat-card arrears">
+                        <div class="stat-card-body">
+                            <div class="stat-icon">
+                            <i class="fi fi-rr-badge-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-title">CGPA</h3>
+                                <p class="stat-value">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="row justify-content car-1">
             <div class="col-lg justify-content">
                 <div class="card">
-                    <div class="card-header fw-bold bg-success">
+                    <div class="card-header fw-bold text-light bg-success">
                         No Of Periods Attended Each Subject
                     </div>
                     <div class="chart-container">
@@ -29,7 +89,7 @@ include 'extra_curricular_table.php';
         <div class="row justify-content-center">
             <div class="col-lg-3">
                 <div class="card">
-                    <div class="card-header fw-bold bg-success">
+                    <div class="card-header fw-bold text-light bg-success">
                         Total Attendance Percentage
                     </div>
                     <div class="chart-container">
@@ -44,7 +104,7 @@ include 'extra_curricular_table.php';
             </div>
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header fw-bold bg-success">
+                    <div class="card-header fw-bold text-light bg-success">
                         Leaderboard
                     </div>
                     <div class="card-body">
@@ -66,7 +126,7 @@ include 'extra_curricular_table.php';
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header fw-bold bg-success">
+                    <div class="card-header fw-bold bg-success text-light">
                         Extra-Curricular
                     </div>
                     <div class="card-body table-container">
@@ -87,7 +147,7 @@ include 'extra_curricular_table.php';
             </div>
             <div class="col-md-6 mb-4 d-flex align-items-stretch">
                 <div class="card w-100 h-100 shadow-sm">
-                    <div class="card-header fw-bold bg-success">
+                    <div class="card-header fw-bold text-light bg-success">
                         Leave Application Status
                     </div>
                     <div class="card-body">
@@ -113,6 +173,7 @@ include 'extra_curricular_table.php';
                 </div>
             </div>
         </div>
+        
         <div class="modal" id="appliedLeaveModal" tabindex="-1" aria-labelledby="appliedLeaveModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

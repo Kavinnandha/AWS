@@ -6,7 +6,12 @@ if(isset($_POST['request_id'])){
     $request_id = $_POST['request_id'];
     $update_query = 'update requests set status=1 where request_id="'.$request_id.'"';
     mysqli_query($connection,$update_query);
-    header("Location: ../dashboard_admin.php");
+    if ($_SESSION['user_id'] == 5){
+        header("Location: ../dashboard_admin.php");
+    }
+    else if ($_SESSION['user_id'] == 1) {
+        header("Location: ../dashboard_hod.php");
+    }
 }else{
 
     if(isset($_SESSION['register_no'])){

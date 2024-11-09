@@ -13,7 +13,7 @@ include 'php/leave_request_details.php';
                     <div class="col">
                         <div class="input-group grp21">
                             <span class="input-group-text" id="basic-addon1">From</span>
-                            <input type="date" class="form-control" id="startDate" name="start_date" required onchange="calculateDays()">
+                            <input type="date" class="form-control" id="startDate" name="start_date" min="<?php echo date('Y-m-d');?>" required onchange="calculateDays()">
                         </div>
                     </div>
 
@@ -32,13 +32,13 @@ include 'php/leave_request_details.php';
                 </div>
 
                 <div class="row mt-5">
-                    <div class="col">
+                    <div class="col time-inputs" style="display:none;">
                         <div class="input-group grp21">
                             <span class="input-group-text" id="basic-addon1">Out time</span>
                             <input type="time" class="form-control para" name="out_time" placeholder="TO" required >
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col time-inputs" style="display:none;">
                         <div class="input-group grp11">
                             <span class="input-group-text" id="basic-addon1">In time</span>
                             <input type="time" class="form-control para in" name="in_time" placeholder="IN" required >
@@ -74,6 +74,23 @@ include 'php/leave_request_details.php';
                 document.getElementById('noOfDays').value = diffDays;
             }
         }
+    
+        document.getElementById('leaveType').addEventListener('change',function(){
+            const timeInputs = document.querySelectorAll('.time-inputs');
+            const timeFields = document.querySelectorAll('.time-inputs input');
+            if(this.value == '4'){
+                timeInputs.forEach(div => div.style.display = 'block');
+                timeFields.forEach(input => input.required = true);
+            } else{
+                timeInputs.forEach(div => div.style.display = 'none');
+                timeFields.forEach(input => input.required = false);
+            }
+});
+
+ $(document).on("change","#startDate",function(){
+            var date = $(this).val();
+            $('#endDate').attr('min',date);
+        });
     </script>
 </body>
 

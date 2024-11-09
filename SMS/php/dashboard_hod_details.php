@@ -163,29 +163,23 @@ $attendance_sql = "
     GROUP BY 
         s.period, b.batch_id
     ORDER BY 
-        s.period, b.batch_id;
+        b.batch_id, s.period;
 ";
 
 
 $attendance_result = mysqli_query($connection, $attendance_sql);
 $attendance_rows = '';
-
+$batch_data = '';
 if ($attendance_result && mysqli_num_rows($attendance_result) > 0) {
     while ($data = mysqli_fetch_assoc($attendance_result)) {
-        $attendance_rows .= '<tr>';
-        $attendance_rows .= '<td>'. $data['batch_name'] . '</td>';    
-        $attendance_rows .= '<td>'. $data['section_id'] . '</td>';
-        $attendance_rows .= '<th>' . $data['period_no'] . '</th>';
-        $attendance_rows .= '<td>' . $data['present'] . '</td>';
-        $attendance_rows .= '<td>' . $data['absent'] . '</td>';
-        $attendance_rows .= '<td>' . $data['od'] . '</td>';
-        $attendance_rows .= '<td>' . (!empty($data['absent_names']) ? $data['absent_names'] : 'None') . '</td>';
-        $attendance_rows .= '<td>' . (!empty($data['od_names']) ? $data['od_names'] : 'None') . '</td>';
-        $attendance_rows .= '</tr>';
+        $batch_name = $data['batch_name'];
+        if (!isset($batch_data[$batch_name])) {
+            $batch_data[$batch_name] = [];
+        }
+        $batch_data[$batch_name][] = $data;
     }
-} else {
-    $attendance_rows = '<tr><td colspan="8" class="text-center">No attendance records found for today.</td></tr>';
-}
+    }
+
 
 $get_low_attendance_details = 'SELECT si.register_no, si.name, (SUM(CASE WHEN status = 1 THEN 1 ELSE (CASE WHEN status = -1 THEN 1 ELSE 0 END) END) / COUNT(a.status)) * 100 as attendance_percentage FROM attendance a JOIN session s ON s.session_id = a.session_id JOIN mapping_teacher_course mtc ON mtc.new_id = s.new_id JOIN student_information si ON si.register_no = a.register_no JOIN mapping_program_department mpd ON mpd.mapping_id = si.mapping_id JOIN hod_mapping hm ON hm.department_id = mpd.department_id WHERE hm.user_id ="'.$user_id.'" GROUP BY register_no having attendance_percentage < 75 ORDER BY `attendance_percentage` ';
 $queryEXE = mysqli_query($connection,$get_low_attendance_details);

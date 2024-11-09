@@ -29,7 +29,7 @@ if($query->num_rows>0){
     $leave_data = "no records found";
 }
 
-$current_leave_info = "select DATE_FORMAT(lr.start_date,'%d-%m-%Y') as start_date,lr.remark,DATE_FORMAT(lr.end_date,'%d-%m-%Y') as end_date,lr.no_of_days,at_type.description as request_for,lr.reason,lr.out_time,lr.in_time,ls.name from leave_record lr join student_information si on si.register_no=lr.reference_id join attendance_type at_type on at_type.type_id=lr.type_id join leave_status ls on ls.status_id=lr.status_id join advisor_mapping am on am.mapping_id=si.mapping_id and am.batch_id=si.batch_id and am.section_id=si.section_id where reference_id = '".$register_no."' and lr.status_id not in (7,8)";
+$current_leave_info = "select DATE_FORMAT(lr.start_date,'%d-%m-%Y') as start_date,lr.remark,DATE_FORMAT(lr.end_date,'%d-%m-%Y') as end_date,lr.no_of_days,at_type.description as request_for,lr.reason,lr.out_time,lr.in_time,ls.name from leave_record lr join student_information si on si.register_no=lr.reference_id join attendance_type at_type on at_type.type_id=lr.type_id join leave_status ls on ls.status_id=lr.status_id join advisor_mapping am on am.mapping_id=si.mapping_id and am.batch_id=si.batch_id and am.section_id=si.section_id where reference_id = '".$register_no."' and lr.status_id not in (7,8,4)";
 $queryEXE = mysqli_query($connection,$current_leave_info);
 $current_leave_data = '';
 if($queryEXE->num_rows>0){

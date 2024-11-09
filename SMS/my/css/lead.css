@@ -1,0 +1,137 @@
+:root {
+    --primary-complex-color: #6366f1;
+    --secondary-complex-color: #4f46e5;
+    --chart-complex-color: #22c55e;
+}
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+}
+.dashboard-complex-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+.complex-card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    background: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.complex-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.complex-stats-card {
+    height: 100%;
+    min-height: 140px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.complex-stats-title {
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.complex-stats-value {
+    color: #111827;
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-top: 0.5rem;
+}
+.complex-stats-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+}
+.complex-trend-up {
+    color: #22c55e;
+}
+.complex-trend-down {
+    color: #ef4444;
+}
+.complex-beta-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    background-color: var(--primary-complex-color);
+    color: white;
+    font-weight: 500;
+    margin-left: 0.75rem;
+}
+.complex-chart-container {
+    position: relative;
+    margin: 0 auto;
+    height: 400px;
+    width: 100%;
+}
+.complex-chart-tooltip {
+    position: absolute;
+    background: rgba(17, 24, 39, 0.95);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    white-space: nowrap;
+}
+.complex-skill-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+.complex-legend-dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+}
+@media (max-width: 768px) {
+    .dashboard-complex-container {
+        margin: 1rem auto;
+    }
+    .complex-stats-card {
+        min-height: 120px;
+    }
+    .complex-stats-value {
+        font-size: 1.5rem;
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0 0 0;
+}
+
+.daily {
+    width: 100% !important;
+    height: 300px !important;
+}
+

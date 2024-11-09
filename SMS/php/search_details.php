@@ -13,7 +13,7 @@ include 'master/session.php';
 'join department d on d.department_id=mpd.department_id '.
 'where l.user_id="'.$uid.'"';
 	$main_dropdown = '<select id="main-dropdown" name="main" class="form-select" aria-label="Default select example">';
-	$main_dropdown.='<option>select details</option>';
+	$main_dropdown.='<option value="">select details</option>';
 	$queryEXE = mysqli_query($connection,$select_subjects);
 	if($queryEXE->num_rows > 0){
 		while($row = mysqli_fetch_array($queryEXE)){
